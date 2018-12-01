@@ -20,6 +20,6 @@
             </Label>
          </children>
       </HBox>
-        <VBox fx:id="function_panel" prefWidth="100.0" spacing="8.0" />
+        <VBox fx:id="usersList" prefWidth="100.0" spacing="8.0" />
     </children>
 </VBox>
