@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1200.0" style="-fx-background-color: #ffffff;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MainController">
+    <children>
+        <BorderPane fx:id="mainContainer" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <left>
+                <AnchorPane prefWidth="300.0" BorderPane.alignment="CENTER">
+                    <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="60.0" style="-fx-background-color: #4D4D4D;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" style="-fx-background-radius: 20;">
+                           <image>
+                              <Image url="@../images/logo.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets bottom="30.0" top="30.0" />
+                           </VBox.margin>
+                        </ImageView>
+                                  <ToggleButton fx:id="t1Button" mnemonicParsing="false" onAction="#displayT1" prefWidth="60.0" selected="true" styleClass="optionButton" text="T1" textFill="#707070">
+                                      <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                      </font>
+                                      <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                      </cursor>
+                                      <toggleGroup>
+                                          <ToggleGroup fx:id="optionGroup" />
+                                      </toggleGroup>
+                                  </ToggleButton>
+                                  <ToggleButton fx:id="t2Button" mnemonicParsing="false" onAction="#displayT2" prefWidth="60.0" styleClass="optionButton" text="T2" textFill="#707070" toggleGroup="$optionGroup">
+                                      <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                      </font>
+                                      <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                      </cursor>
+                                  </ToggleButton>
+                                  <ToggleButton fx:id="t3Button" mnemonicParsing="false" onAction="#displayT3" prefWidth="60.0" styleClass="optionButton" text="T3" textFill="#707070" toggleGroup="$optionGroup">
+                                      <font>
+                                          <Font name="Segoe UI Bold" size="14.0" />
+                                      </font>
+                                      <cursor>
+                                          <Cursor fx:constant="HAND" />
+                                      </cursor>
+                                  </ToggleButton>
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                        <VBox fx:id="main_panel" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets left="25.0" right="25.0" />
+                     </padding>
+                        </VBox>
+                    </children>
+                </AnchorPane>
+            </left>
+        </BorderPane>
+    </children>
+</AnchorPane>
