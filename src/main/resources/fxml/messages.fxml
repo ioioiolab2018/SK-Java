@@ -10,10 +10,10 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<GridPane style="-fx-background-color: #EFF2F5;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MessagesController">
+<GridPane style="-fx-background-color: #EFF2F5;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MessagesController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -25,7 +25,7 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
          <children>
-            <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <HBox alignment="CENTER_LEFT" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="45.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label text="Pokój:" textFill="#707070">
                      <font>
@@ -35,13 +35,21 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Label>
-                  <Label fx:id="function_name" textFill="#8d8d8d">
+                  <Label fx:id="roomName" maxHeight="23.0" minHeight="23.0" prefHeight="23.0" textFill="#8d8d8d">
                      <font>
                         <Font name="Segoe UI Bold" size="14.0" />
                      </font>
                   </Label>
                </children>
             </HBox>
+            <Button mnemonicParsing="false" onAction="#disconnectFromRoom" styleClass="messageButton" text="x" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font name="Segoe UI Bold" size="22.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
          </children>
          <GridPane.margin>
             <Insets left="20.0" right="20.0" top="15.0" />
@@ -51,6 +59,9 @@
          <GridPane.margin>
             <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
          </GridPane.margin>
+         <children>
+            <VBox fx:id="messagesList" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+         </children>
       </AnchorPane>
       <AnchorPane fx:id="information_container" prefHeight="50.0" prefWidth="870.0" style="-fx-background-color: #EFF2F5;" GridPane.rowIndex="2">
          <children>
@@ -63,10 +74,10 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextArea prefHeight="200.0" prefWidth="200.0" scrollLeft="-1.0" />
+                  <TextArea onKeyPressed="#sendMessage" prefHeight="200.0" prefWidth="200.0" scrollLeft="-1.0" />
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
-                        <Button mnemonicParsing="false" styleClass="acceptButton" text="Wyślij" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <Button mnemonicParsing="false" onAction="#send" styleClass="acceptButton" text="Wyślij" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <cursor>
                               <Cursor fx:constant="HAND" />
                            </cursor>

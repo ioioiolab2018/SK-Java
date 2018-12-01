@@ -14,14 +14,14 @@ public class T2Controller {
 
     @FXML
     void initialize() {
-        setPanel("/fxml/welcome.fxml");
+        setPanel();
+        setPanel();
         IRC.connectionGod.getConnectedProperty().addListener(
                 (observable, oldValue, newValue) -> roomsList.getChildren().removeAll(roomsList.getChildren()));
     }
 
-    //  ===============   INTERFACE FUNCTIONS   ===============
-    private void setPanel(String path) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
+    private void setPanel() {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/roomTemplate.fxml"));
         Parent root = null;
         try {
             root = loader.load();
@@ -29,7 +29,4 @@ public class T2Controller {
         }
         roomsList.getChildren().add(root);
     }
-
-    //  ===============   OTHERS   ===============
-
 }

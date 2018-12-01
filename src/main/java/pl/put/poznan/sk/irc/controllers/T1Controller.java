@@ -17,6 +17,12 @@ public class T1Controller {
 
     @FXML
     void initialize() {
+        if (IRC.connectionGod.getUsername() != null) {
+            name_input.setText(IRC.connectionGod.getUsername());
+        }
+        if (IRC.connectionGod.getHostAddress() != null) {
+            host_address_input.setText(IRC.connectionGod.getHostAddress());
+        }
         disconnectButton.disableProperty()
                 .bind(IRC.connectionGod.getConnectedProperty().not());
         connectButton.disableProperty()
@@ -35,6 +41,7 @@ public class T1Controller {
     @FXML
     private void disconnect() {
         IRC.connectionGod.setConnected(false);
+        IRC.connectionGod.setRoomId(null);
     }
 
     @FXML

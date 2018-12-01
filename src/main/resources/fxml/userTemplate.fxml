@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.UserController">
+      <children>
+          <Label fx:id="icon" alignment="CENTER" maxHeight="40.0" maxWidth="40.0" minHeight="40.0" minWidth="40.0" style="-fx-background-radius: 20 20 20 20; -fx-background-color: #57a1f6; -fx-border-radius: 20 20 20 20; -fx-text-fill: #ffffff;" text="T" textAlignment="CENTER" textFill="#707070" wrapText="true">
+              <font>
+                  <Font name="Segoe UI Bold" size="20.0" />
+              </font>
+              <HBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+              </HBox.margin>
+          </Label>
+      <Label fx:id="username" alignment="CENTER" text="Tomek" textFill="#707070" wrapText="true">
+         <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+         </font>
+      </Label>
+      </children>
+  </HBox>

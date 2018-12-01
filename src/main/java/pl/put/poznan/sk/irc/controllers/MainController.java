@@ -32,7 +32,6 @@ public class MainController {
     void initialize() {
         setPanel("/fxml/T1.fxml");
         setMainContainer("/fxml/welcome.fxml");
-//        setMainContainer("/fxml/messages.fxml");
         t2Button.disableProperty().bind(IRC.connectionGod.getConnectedProperty().not());
         t3Button.disableProperty().bind(IRC.connectionGod.getRoomIdProperty().isNull());
         IRC.connectionGod.getConnectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -42,6 +41,22 @@ public class MainController {
             } else {
                 optionGroup.selectToggle(optionGroup.getToggles().get(0));
                 displayT1();
+            }
+        });
+        IRC.connectionGod.getRoomIdProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                optionGroup.selectToggle(optionGroup.getToggles().get(2));
+                displayT3();
+                setMainContainer("/fxml/messages.fxml");
+            } else {
+                if (IRC.connectionGod.getConnectedProperty().getValue()) {
+                    optionGroup.selectToggle(optionGroup.getToggles().get(1));
+                    displayT2();
+                } else {
+                    optionGroup.selectToggle(optionGroup.getToggles().get(0));
+                    displayT1();
+                }
+                setMainContainer("/fxml/welcome.fxml");
             }
         });
     }

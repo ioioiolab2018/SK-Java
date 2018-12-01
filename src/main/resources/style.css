@@ -43,6 +43,26 @@
     -fx-border-radius: 10px;
 }
 
+.roomButton {
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-text-fill: #00d200;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
+.messageButton {
+    -fx-background-color: #ffffff;
+    -fx-pref-width: 40px;
+    -fx-pref-height: 40px;
+    -fx-text-fill: #e60000;
+    -fx-border-color: #ffffff;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+}
+
 .acceptButton {
     -fx-pref-width: 85px;
     -fx-background-color: #57a1f6;
