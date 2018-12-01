@@ -4,6 +4,7 @@
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -60,10 +61,18 @@
             <Insets bottom="15.0" left="20.0" right="20.0" top="15.0" />
          </GridPane.margin>
          <children>
-            <VBox fx:id="messagesList" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <ScrollPane fx:id="messagesScroll" fitToHeight="true" fitToWidth="true" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <content>
+                  <VBox fx:id="messagesList" style="-fx-background-color: #ffffff;">
+                     <padding>
+                        <Insets left="15.0" right="15.0" />
+                     </padding>
+                  </VBox>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="information_container" prefHeight="50.0" prefWidth="870.0" style="-fx-background-color: #EFF2F5;" GridPane.rowIndex="2">
+      <AnchorPane prefHeight="50.0" prefWidth="870.0" style="-fx-background-color: #EFF2F5;" GridPane.rowIndex="2">
          <children>
             <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <columnConstraints>
@@ -74,7 +83,7 @@
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <TextArea onKeyPressed="#sendMessage" prefHeight="200.0" prefWidth="200.0" scrollLeft="-1.0" />
+                  <TextArea fx:id="messageInput" onKeyReleased="#sendMessage" prefHeight="200.0" prefWidth="200.0" scrollLeft="-1.0" />
                   <AnchorPane GridPane.columnIndex="1">
                      <children>
                         <Button mnemonicParsing="false" onAction="#send" styleClass="acceptButton" text="Wyślij" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MessageController">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="50.0" prefWidth="100.0" />
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+    </rowConstraints>
+    <children>
+        <AnchorPane minWidth="150.0" style="-fx-background-color: #ffffff;" stylesheets="@../style.css" GridPane.columnIndex="1">
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label fx:id="icon" alignment="CENTER" maxHeight="30.0" maxWidth="30.0" minHeight="30.0" minWidth="30.0" style="-fx-background-radius: 10 10 10 10; -fx-background-color: #57a1f6; -fx-border-radius: 10 10 10 10; -fx-text-fill: #ffffff;" text="T" textAlignment="CENTER" textFill="#707070" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="18.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
+                        </Label>
+                        <Label fx:id="username" alignment="CENTER" prefHeight="30.0" text="Tomek" textFill="#707070" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI Bold" size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #ffffff;" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <children>
+                        <Label fx:id="sendDate" alignment="CENTER" prefHeight="30.0" text="16:20" textAlignment="RIGHT" textFill="#707070" wrapText="true">
+                            <font>
+                                <Font name="Segoe UI" size="14.0" />
+                            </font>
+                            <HBox.margin>
+                                <Insets top="10.0" />
+                            </HBox.margin>
+                        </Label>
+                    </children>
+                </HBox>
+                <TextFlow AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+                    <children>
+                        <Label fx:id="message" wrapText="true" />
+                    </children>
+                </TextFlow>
+            </children>
+        </AnchorPane>
+    </children>
+</GridPane>
