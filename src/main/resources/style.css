@@ -43,6 +43,16 @@
     -fx-border-radius: 10px;
 }
 
+/*.roomButton {*/
+    /*-fx-background-color: #00d200;*/
+    /*-fx-padding: 0;*/
+    /*-fx-pref-width: 40px;*/
+    /*-fx-pref-height: 40px;*/
+    /*-fx-text-fill: #ffffff;*/
+    /*-fx-border-color: #00d200;*/
+    /*-fx-border-radius: 20px;*/
+    /*-fx-background-radius: 20px;*/
+/*}*/
 .roomButton {
     -fx-background-color: #ffffff;
     -fx-pref-width: 40px;

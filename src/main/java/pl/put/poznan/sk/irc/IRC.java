@@ -19,6 +19,7 @@ public class IRC extends Application {
         Parent root = loader.load();
         primaryStage.setTitle("SK-IRC");
         primaryStage.setScene(new Scene(root, 1200, 720));
+        primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(MAIN_ICON));
         primaryStage.show();
 //        MainController mainController = loader.getController();

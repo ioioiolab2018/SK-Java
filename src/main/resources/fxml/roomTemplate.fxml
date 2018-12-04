@@ -27,14 +27,14 @@
               </Label>
           </children>
       </HBox>
-      <HBox alignment="CENTER_RIGHT" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <HBox alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label fx:id="usersQuantity" alignment="CENTER" text="1/10" textAlignment="RIGHT" textFill="#707070" wrapText="true">
                <font>
                   <Font name="Segoe UI" size="16.0" />
                </font>
             </Label>
-            <Button mnemonicParsing="false" onAction="#connectToRoom" styleClass="roomButton" stylesheets="@../style.css" text="&gt;" textAlignment="CENTER">
+            <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#connectToRoom" styleClass="roomButton" stylesheets="@../style.css" text="&gt;" textAlignment="CENTER">
                <font>
                   <Font name="Segoe UI Bold" size="22.0" />
                </font>
