@@ -10,8 +10,8 @@ public class WelcomeController {
 
     @FXML
     void initialize() {
-        displayMessage(IRC.connectionGod.getConnectedProperty().getValue());
-        IRC.connectionGod.getConnectedProperty().addListener((observable, oldValue, newValue) -> displayMessage(newValue));
+        displayMessage(IRC.connectionManager.getConnectedProperty().getValue());
+        IRC.connectionManager.getConnectedProperty().addListener((observable, oldValue, newValue) -> displayMessage(newValue));
     }
 
     private void setLabelText(String text) {
@@ -20,7 +20,7 @@ public class WelcomeController {
 
     private void displayMessage(boolean value) {
         if (value) {
-            setLabelText("Witaj " + IRC.connectionGod.getUsername() + " na serwerze SK-IRC!\nOd teraz możesz dołączyć do jednej z wielu prowadzonych rozmów.");
+            setLabelText("Witaj " + IRC.connectionManager.getUsername() + " na serwerze SK-IRC!\nOd teraz możesz dołączyć do jednej z wielu prowadzonych rozmów.");
         } else {
             setLabelText("Nie nawiązano połączenia z serwerem czatu. Proszę zmienić ustawienia.");
         }

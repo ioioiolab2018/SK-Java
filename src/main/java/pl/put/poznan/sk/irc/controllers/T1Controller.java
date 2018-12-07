@@ -17,16 +17,16 @@ public class T1Controller {
 
     @FXML
     void initialize() {
-        if (IRC.connectionGod.getUsername() != null) {
-            name_input.setText(IRC.connectionGod.getUsername());
+        if (IRC.connectionConfiguration.getUsername() != null) {
+            name_input.setText(IRC.connectionConfiguration.getUsername());
         }
-        if (IRC.connectionGod.getHostAddress() != null) {
-            host_address_input.setText(IRC.connectionGod.getHostAddress());
+        if (IRC.connectionConfiguration.getHostAddress() != null) {
+            host_address_input.setText(IRC.connectionConfiguration.getHostAddress());
         }
         disconnectButton.disableProperty()
-                .bind(IRC.connectionGod.getConnectedProperty().not());
+                .bind(IRC.connectionManager.getConnectedProperty().not());
         connectButton.disableProperty()
-                .bind(IRC.connectionGod.getConnectedProperty()
+                .bind(IRC.connectionManager.getConnectedProperty()
                         .or(name_input.textProperty().isEmpty())
                         .or(host_address_input.textProperty().isEmpty()));
     }
@@ -40,8 +40,8 @@ public class T1Controller {
     //  ===============   INTERFACE FUNCTIONS   ===============
     @FXML
     private void disconnect() {
-        IRC.connectionGod.setConnected(false);
-        IRC.connectionGod.setRoomId(null);
+        IRC.connectionManager.setConnected(false);
+        IRC.connectionManager.setRoomId(null);
     }
 
     @FXML
@@ -51,9 +51,10 @@ public class T1Controller {
             host_address_input.setPromptText("Błędna wartość!");
             return;
         }
-        IRC.connectionGod.setUsername(name_input.getText());
-        IRC.connectionGod.setHostAddress(host_address_input.getText());
-        IRC.connectionGod.setConnected(true);
+        IRC.connectionConfiguration.setUsername(name_input.getText());
+        IRC.connectionConfiguration.setHostAddress(host_address_input.getText());
+//        IRC.connectionManager.setConnected(true);
+        IRC.connectionManager.connectToServer();
         clear();
     }
 

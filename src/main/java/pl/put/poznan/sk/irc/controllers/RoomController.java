@@ -24,6 +24,6 @@ public class RoomController {
 
     @FXML
     private void connectToRoom() {
-        IRC.connectionGod.setRoomId(roomName.getText());
+        IRC.connectionManager.setRoomId(roomName.getText());
     }
 }

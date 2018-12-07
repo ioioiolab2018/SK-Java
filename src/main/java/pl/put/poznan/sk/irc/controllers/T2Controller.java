@@ -1,6 +1,5 @@
 package pl.put.poznan.sk.irc.controllers;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,7 +19,7 @@ public class T2Controller {
     void initialize() {
         setPanel();
         setPanel();
-        IRC.connectionGod.getConnectedProperty().addListener(
+        IRC.connectionManager.getConnectedProperty().addListener(
                 (observable, oldValue, newValue) -> roomsList.getChildren().removeAll(roomsList.getChildren()));
     }
 

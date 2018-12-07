@@ -18,7 +18,7 @@ public class T3Controller {
         setPanel("/fxml/userTemplate.fxml");
         setPanel("/fxml/userTemplate.fxml");
         setPanel("/fxml/userTemplate.fxml");
-        IRC.connectionGod.getConnectedProperty().addListener(
+        IRC.connectionManager.getConnectedProperty().addListener(
                 (observable, oldValue, newValue) -> usersList.getChildren().removeAll(usersList.getChildren()));
     }
 

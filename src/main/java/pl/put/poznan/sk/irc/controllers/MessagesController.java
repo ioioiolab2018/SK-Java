@@ -27,12 +27,12 @@ public class MessagesController {
 
     @FXML
     void initialize() {
-        roomName.setText(IRC.connectionGod.getRoomIdProperty().getValue());
+        roomName.setText(IRC.connectionManager.getRoomIdProperty().getValue());
         for (int i = 0; i < 10; i++) {
             displayMessage(new Message("Tomek", "Cześć!", "16:20"));
         }
         displayMessage(new Message("Tomek", "Jestem Tomek. A Ty?", "16:20"));
-        displayMessage("/fxml/messageTemplate2.fxml", new Message(IRC.connectionGod.getUsername(), "Cześć Tomek...", "16:21"));
+        displayMessage("/fxml/messageTemplate2.fxml", new Message(IRC.connectionConfiguration.getUsername(), "Cześć Tomek...", "16:21"));
         displayMessage(new Message("Tomek", "No cześć.. xD", "16:21"));
     }
 
@@ -55,7 +55,7 @@ public class MessagesController {
 
     @FXML
     private void disconnectFromRoom() {
-        IRC.connectionGod.setRoomId(null);
+        IRC.connectionManager.setRoomId(null);
     }
 
     @FXML
@@ -72,7 +72,7 @@ public class MessagesController {
         String dateString = localDateTime.getHour() + ":" + (minutes < 10 ? "0" + minutes : minutes);
         String text = messageInput.getText();
         if (!text.equals("") && !text.equals("\n")) {
-            Message message = new Message(IRC.connectionGod.getUsername(), text, dateString);
+            Message message = new Message(IRC.connectionConfiguration.getUsername(), text, dateString);
             displayMessage("/fxml/messageTemplate2.fxml", message);
         }
         messageInput.setText("");

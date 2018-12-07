@@ -1,7 +1,5 @@
 package pl.put.poznan.sk.irc.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,12 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import pl.put.poznan.sk.irc.IRC;
-import pl.put.poznan.sk.irc.model.TableData;
 
 import java.io.IOException;
 
 public class MainController {
-    private ObservableList<TableData> dataList = FXCollections.observableArrayList();
+//    private ObservableList<> dataList = FXCollections.observableArrayList();
     @FXML
     private BorderPane mainContainer;
     @FXML
@@ -32,9 +29,9 @@ public class MainController {
     void initialize() {
         setPanel("/fxml/T1.fxml");
         setMainContainer("/fxml/welcome.fxml");
-        t2Button.disableProperty().bind(IRC.connectionGod.getConnectedProperty().not());
-        t3Button.disableProperty().bind(IRC.connectionGod.getRoomIdProperty().isNull());
-        IRC.connectionGod.getConnectedProperty().addListener((observable, oldValue, newValue) -> {
+        t2Button.disableProperty().bind(IRC.connectionManager.getConnectedProperty().not());
+        t3Button.disableProperty().bind(IRC.connectionManager.getRoomIdProperty().isNull());
+        IRC.connectionManager.getConnectedProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue) {
                 optionGroup.selectToggle(optionGroup.getToggles().get(1));
                 displayT2();
@@ -43,13 +40,13 @@ public class MainController {
                 displayT1();
             }
         });
-        IRC.connectionGod.getRoomIdProperty().addListener((observable, oldValue, newValue) -> {
+        IRC.connectionManager.getRoomIdProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
                 optionGroup.selectToggle(optionGroup.getToggles().get(2));
                 displayT3();
                 setMainContainer("/fxml/messages.fxml");
             } else {
-                if (IRC.connectionGod.getConnectedProperty().getValue()) {
+                if (IRC.connectionManager.getConnectedProperty().getValue()) {
                     optionGroup.selectToggle(optionGroup.getToggles().get(1));
                     displayT2();
                 } else {
@@ -88,7 +85,7 @@ public class MainController {
             t1Button.setSelected(true);
         } else {
             setPanel("/fxml/T1.fxml");
-            dataList.clear();
+//            dataList.clear();
         }
     }
 
@@ -98,7 +95,7 @@ public class MainController {
             t2Button.setSelected(true);
         } else {
             setPanel("/fxml/T2.fxml");
-            dataList.clear();
+//            dataList.clear();
         }
     }
 
@@ -108,7 +105,7 @@ public class MainController {
             t3Button.setSelected(true);
         } else {
             setPanel("/fxml/T3.fxml");
-            dataList.clear();
+//            dataList.clear();
         }
     }
 }
