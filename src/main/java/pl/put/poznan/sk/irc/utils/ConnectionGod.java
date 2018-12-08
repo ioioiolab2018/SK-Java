@@ -29,12 +29,14 @@ public class ConnectionGod implements Runnable {
         try {
             loginToServer();
             while (socket.isConnected()) {
+                buffer = new byte[100];
 
                 is.read(buffer);
 
                 message += new String(buffer);
 
                 if (message.contains("#")) {
+                    System.out.println(message);
                     startIndex = message.indexOf("$");
                     endIndex = message.indexOf("#");
                     commandValue = message.substring(startIndex + 1, endIndex);
@@ -65,7 +67,7 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "create":
-                            if (!commandValues[1].equals("ok")) {
+                            if (commandValues[1].equals("ok")) {
                                 getRoomsList();
                             }
                             break;
@@ -83,6 +85,7 @@ public class ConnectionGod implements Runnable {
                             if (IRC.connectionManager.getRoomController() != null) {
                                 String[] rooms = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
+                                    IRC.connectionManager.getRoomController().clearRoomsList();
                                     for (String room : rooms) {
                                         IRC.connectionManager.getRoomController()
                                                 .displayRoom(new Room(room.split(";")));
@@ -170,7 +173,8 @@ public class ConnectionGod implements Runnable {
      * Metoda pozwalająca na opuszczenie pokoju
      */
     public void leaveRoom(String roomName) {
-        String string = "leave:" + roomName + "#";
+        String string = "$leave:" + roomName + "#";
+        System.out.println(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {

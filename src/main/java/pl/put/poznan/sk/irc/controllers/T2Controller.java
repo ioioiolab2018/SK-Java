@@ -35,12 +35,15 @@ public class T2Controller {
         roomsList.getChildren().add(root);
     }
 
+    public void clearRoomsList() {
+        roomsList.getChildren().removeAll(roomsList.getChildren());
+    }
+
     @FXML
     private void createRoom() {
         IRC.connectionManager.createRoom(
                 Utils.deleteInvalidCharcters(roomName.getText().trim())
                         .replace(" ", "_"));
-        IRC.connectionManager.getRoomsList();
         roomName.setText("");
     }
 }
