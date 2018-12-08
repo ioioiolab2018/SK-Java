@@ -1,4 +1,4 @@
-# SK-IRC Client - chat app
+# ![SK IRC logo](./src/main/resources/images/logo.png) SK-IRC Client - chat app
 
 Simple chat app created with JavaFX and Socket.
 
