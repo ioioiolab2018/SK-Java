@@ -12,6 +12,7 @@ public class WelcomeController {
     void initialize() {
         displayMessage(IRC.connectionManager.getConnectedProperty().getValue());
         IRC.connectionManager.getConnectedProperty().addListener((observable, oldValue, newValue) -> displayMessage(newValue));
+        IRC.connectionManager.setMessagesController(null);
     }
 
     private void setLabelText(String text) {
@@ -20,7 +21,7 @@ public class WelcomeController {
 
     private void displayMessage(boolean value) {
         if (value) {
-            setLabelText("Witaj " + IRC.connectionManager.getUsername() + " na serwerze SK-IRC!\nOd teraz możesz dołączyć do jednej z wielu prowadzonych rozmów.");
+            setLabelText("Witaj " + IRC.connectionConfiguration.getUsername() + " na serwerze SK-IRC!\nOd teraz możesz dołączyć do jednej z wielu prowadzonych rozmów.");
         } else {
             setLabelText("Nie nawiązano połączenia z serwerem czatu. Proszę zmienić ustawienia.");
         }

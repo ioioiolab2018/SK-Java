@@ -40,8 +40,8 @@ public class T1Controller {
     //  ===============   INTERFACE FUNCTIONS   ===============
     @FXML
     private void disconnect() {
-        IRC.connectionManager.setConnected(false);
-        IRC.connectionManager.setRoomId(null);
+        IRC.connectionManager.leaveRoom();
+        IRC.connectionManager.logout();
     }
 
     @FXML
@@ -53,7 +53,6 @@ public class T1Controller {
         }
         IRC.connectionConfiguration.setUsername(name_input.getText());
         IRC.connectionConfiguration.setHostAddress(host_address_input.getText());
-//        IRC.connectionManager.setConnected(true);
         IRC.connectionManager.connectToServer();
         clear();
     }

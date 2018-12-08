@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.layout.VBox;
 import pl.put.poznan.sk.irc.IRC;
+import pl.put.poznan.sk.irc.model.User;
 
 import java.io.IOException;
 
@@ -14,21 +15,19 @@ public class T3Controller {
 
     @FXML
     void initialize() {
-        setPanel("/fxml/userTemplate.fxml");
-        setPanel("/fxml/userTemplate.fxml");
-        setPanel("/fxml/userTemplate.fxml");
-        setPanel("/fxml/userTemplate.fxml");
-        IRC.connectionManager.getConnectedProperty().addListener(
-                (observable, oldValue, newValue) -> usersList.getChildren().removeAll(usersList.getChildren()));
+        IRC.connectionManager.setUserController(this);
+        IRC.connectionManager.getUsersList();
     }
 
-    private void setPanel(String path) {
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource(path));
+    public void displayUser(User user) {
+        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/userTemplate.fxml"));
         Parent root = null;
         try {
             root = loader.load();
         } catch (IOException ignored) {
         }
+        UserController controller = loader.getController();
+        controller.setUserInformation(user);
         usersList.getChildren().add(root);
     }
 }

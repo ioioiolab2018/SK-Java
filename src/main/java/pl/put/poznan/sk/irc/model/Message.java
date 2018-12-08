@@ -14,6 +14,12 @@ public class Message {
         this.sentDate = sentDate;
     }
 
+    public Message(String[] msgArray) {
+        this.username = msgArray[0];
+        this.message = msgArray[1];
+        this.sentDate = msgArray[2].replace("-", ":");
+    }
+
     public String getUsername() {
         return username;
     }

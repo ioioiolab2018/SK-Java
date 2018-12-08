@@ -6,6 +6,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import pl.put.poznan.sk.irc.IRC;
+import pl.put.poznan.sk.irc.model.Room;
 
 import java.io.IOException;
 
@@ -17,25 +18,26 @@ public class T2Controller {
 
     @FXML
     void initialize() {
-        setPanel();
-        setPanel();
-        IRC.connectionManager.getConnectedProperty().addListener(
-                (observable, oldValue, newValue) -> roomsList.getChildren().removeAll(roomsList.getChildren()));
+        IRC.connectionManager.setRoomController(this);
+        IRC.connectionManager.getRoomsList();
     }
 
-    private void setPanel() {
+    public void displayRoom(Room room) {
         FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/fxml/roomTemplate.fxml"));
         Parent root = null;
         try {
             root = loader.load();
         } catch (IOException ignored) {
         }
+        RoomController controller = loader.getController();
+        controller.setRoomInformation(room);
         roomsList.getChildren().add(root);
     }
 
     @FXML
     private void createRoom() {
-        System.out.println("Create '" + roomName.getText() + "'room!");
+        IRC.connectionManager.createRoom(roomName.getText());
+        IRC.connectionManager.getRoomsList();
         roomName.setText("");
     }
 }

@@ -11,7 +11,6 @@ import pl.put.poznan.sk.irc.IRC;
 import java.io.IOException;
 
 public class MainController {
-//    private ObservableList<> dataList = FXCollections.observableArrayList();
     @FXML
     private BorderPane mainContainer;
     @FXML
@@ -85,7 +84,6 @@ public class MainController {
             t1Button.setSelected(true);
         } else {
             setPanel("/fxml/T1.fxml");
-//            dataList.clear();
         }
     }
 
@@ -95,7 +93,6 @@ public class MainController {
             t2Button.setSelected(true);
         } else {
             setPanel("/fxml/T2.fxml");
-//            dataList.clear();
         }
     }
 
@@ -105,7 +102,6 @@ public class MainController {
             t3Button.setSelected(true);
         } else {
             setPanel("/fxml/T3.fxml");
-//            dataList.clear();
         }
     }
 }

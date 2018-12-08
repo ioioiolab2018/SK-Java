@@ -26,11 +26,15 @@ public class IRC extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(MAIN_ICON));
         primaryStage.show();
-//        MainController mainController = loader.getController();
-//        mainController.setPanel("/fxml/T1.fxml");
     }
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void stop(){
+        connectionManager.leaveRoom();
+        connectionManager.logout();
     }
 }

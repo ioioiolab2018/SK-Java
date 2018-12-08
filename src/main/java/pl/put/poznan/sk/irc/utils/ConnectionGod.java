@@ -1,6 +1,10 @@
 package pl.put.poznan.sk.irc.utils;
 
+import javafx.application.Platform;
 import pl.put.poznan.sk.irc.IRC;
+import pl.put.poznan.sk.irc.model.Message;
+import pl.put.poznan.sk.irc.model.Room;
+import pl.put.poznan.sk.irc.model.User;
 
 import java.io.*;
 import java.net.Socket;
@@ -8,7 +12,6 @@ import java.net.Socket;
 public class ConnectionGod implements Runnable {
     private Socket socket;
     private InputStream is;
-    private BufferedReader reader;
     private OutputStream os;
 
     public ConnectionGod() {
@@ -21,7 +24,7 @@ public class ConnectionGod implements Runnable {
         byte[] buffer = new byte[100];
         String commandValue;
         String message = "";
-        int index;
+        int startIndex, endIndex;
 
         try {
             loginToServer();
@@ -32,45 +35,75 @@ public class ConnectionGod implements Runnable {
                 message += new String(buffer);
 
                 if (message.contains("#")) {
-                    index = message.indexOf("#");
-                    commandValue = message.substring(0, index);
-                    message = message.substring(index);
-                    System.out.println("commandValue\n\t" + commandValue);
+                    startIndex = message.indexOf("$");
+                    endIndex = message.indexOf("#");
+                    commandValue = message.substring(startIndex + 1, endIndex);
+
+                    if (message.indexOf("$", endIndex) > endIndex) {
+                        message = message.substring(endIndex + 1);
+                    } else {
+                        message = "";
+                    }
 
                     String[] commandValues = commandValue.split(":");
                     switch (commandValues[0]) {
                         case "login":
                             System.out.println("login:\n\t" + commandValues[1]);
-//                            index = message.indexOf(" ");
-//                            commandValue = message.substring(0, index);
-//                            message = message.substring(index + 1);
-//                            if (commandValue.equals("ok")) {
-//                                IRC.connectionManager.setConnected(true);
-//                            } else {
-//                                IRC.connectionManager.setConnected(false);
-//                                System.out.println(message);
-//                            }
+                            if (commandValues[1].equals("ok")) {
+                                Platform.runLater(() -> {
+                                    IRC.connectionManager.setConnected(true);
+                                });
+                            } else {
+                                Platform.runLater(() -> {
+                                    IRC.connectionManager.setConnected(false);
+                                });
+                            }
                             break;
                         case "logout":
-                            System.out.println("logout:\n\t" + commandValues[1]);
-//                            IRC.connectionManager.setConnected(false);
-                            break;
+                            Platform.runLater(() -> {
+                                IRC.connectionManager.setConnected(false);
+                            });
+                            return;
                         case "message":
-                            System.out.println("message:\n\t" + commandValues[1]);
+                            if (IRC.connectionManager.getMessagesController() != null) {
+                                Platform.runLater(() -> {
+                                    IRC.connectionManager.getMessagesController().displayMessage(new Message(commandValues[1].split(";")));
+                                });
+                            }
+                            break;
+                        case "enter":
+                            if (!commandValues[1].equals("ok")) {
+                                Platform.runLater(() -> {
+                                    IRC.connectionManager.setRoomId(null);
+                                });
+                            }
+                            break;
+                        case "leave":
+                            if (commandValues[1].equals("ok")) {
+                                Platform.runLater(() -> {
+                                    IRC.connectionManager.setRoomId(null);
+                                });
+                            }
                             break;
                         case "rooms":
-                            System.out.println("rooms:\n\t" + commandValues[1]);
-//                            index = message.indexOf(" ");
-//                            commandValue = message.substring(0, index);
-//                            message = message.substring(index + 1);
-//                            if (commandValue.equals("ok")) {
-//
-//                            } else {
-//                                System.out.println(message);
-//                            }
+                            if (IRC.connectionManager.getRoomController() != null) {
+                                String[] rooms = commandValues[1].split(" ");
+                                Platform.runLater(() -> {
+                                    for (String room : rooms) {
+                                        IRC.connectionManager.getRoomController().displayRoom(new Room(room.split(";")));
+                                    }
+                                });
+                            }
                             break;
                         case "users":
-                            System.out.println("users:\n\t" + commandValues[1]);
+                            if (IRC.connectionManager.getRoomController() != null) {
+                                String[] users = commandValues[1].split(" ");
+                                Platform.runLater(() -> {
+                                    for (String user : users) {
+                                        IRC.connectionManager.getUserController().displayUser(new User(user));
+                                    }
+                                });
+                            }
                             break;
                     }
                 }
@@ -90,8 +123,8 @@ public class ConnectionGod implements Runnable {
 
             os = socket.getOutputStream();
             is = socket.getInputStream();
-            reader = new BufferedReader(new InputStreamReader(is));
         } catch (IOException e) {
+            System.out.println("Coś nie pykło!");
             IRC.connectionManager.setDisplayConnectionErrorMessage(true);
         }
     }
@@ -100,7 +133,8 @@ public class ConnectionGod implements Runnable {
      * Metoda logująca użytkownika
      */
     private void loginToServer() throws IOException {
-        String string = "login " + IRC.connectionConfiguration.getUsername();
+        String string = "$login:" + IRC.connectionConfiguration.getUsername() + "#";
+        System.out.println(string);
         os.write(string.getBytes());
     }
 
@@ -108,7 +142,7 @@ public class ConnectionGod implements Runnable {
      * Metoda zamykająca połączenie z serwerem
      */
     public void logoutFromServer() {
-        String string = "logout";
+        String string = "$logout#";
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -119,7 +153,7 @@ public class ConnectionGod implements Runnable {
      * Metoda dodająca pokój
      */
     public void createRoom(String roomName) {
-        String string = "create " + roomName;
+        String string = "$create:" + roomName + "#";
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -129,24 +163,59 @@ public class ConnectionGod implements Runnable {
     /**
      * Metoda pozwalająca na dołączenie do pokoju
      */
-    public void enterToRoom(String roomName) throws IOException {
-        String string = "enter " + roomName;
-        os.write(string.getBytes());
+    public void enterToRoom(String roomName) {
+        String string = "$enter:" + roomName + "#";
+        try {
+            os.write(string.getBytes());
+        } catch (IOException ignored) {
+        }
+    }
+
+    /**
+     * Metoda pozwalająca na opuszczenie pokoju
+     */
+    public void leaveRoom(String roomName) {
+        String string = "leave:" + roomName + "#";
+        try {
+            os.write(string.getBytes());
+        } catch (IOException ignored) {
+        }
     }
 
     /**
      * Metoda pobierająca listę pokoi
      */
-    public void getRoomsList() throws IOException {
-        String string = "rooms";
-        os.write(string.getBytes());
+    public void getRoomsList() {
+        String string = "$rooms#";
+        try {
+            os.write(string.getBytes());
+        } catch (IOException ignored) {
+        }
     }
 
     /**
      * Metoda pobierająca listę użytkowników w pokoju
      */
-    public void getUsersList(String roomName) throws IOException {
-        String string = "users " + roomName;
-        os.write(string.getBytes());
+    public void getUsersList(String roomName) {
+        String string = "$users:" + roomName + "#";
+        try {
+            os.write(string.getBytes());
+        } catch (IOException ignored) {
+        }
+    }
+
+    /**
+     * Metoda wysyłająca wiadomość do innych użytkowników
+     */
+    public void sendMessage(Message message) {
+        String string = "$message:"
+                + message.getUsername()
+                + ";" + message.getMessage()
+                + ";" + message.getSentDate()
+                + "#";
+        try {
+            os.write(string.getBytes());
+        } catch (IOException ignored) {
+        }
     }
 }
