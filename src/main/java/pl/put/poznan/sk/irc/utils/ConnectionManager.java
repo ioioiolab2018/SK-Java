@@ -12,7 +12,7 @@ import pl.put.poznan.sk.irc.model.Message;
 
 public class ConnectionManager {
     private ConnectionGod connectionGod;
-    private BooleanProperty Connected = new SimpleBooleanProperty(false);
+    private BooleanProperty connected = new SimpleBooleanProperty(false);
     private StringProperty roomId = new SimpleStringProperty(null);
     private BooleanProperty displayConnectionErrorMessage = new SimpleBooleanProperty(false);
     private MessagesController messagesController;
@@ -23,11 +23,11 @@ public class ConnectionManager {
     }
 
     public BooleanProperty getConnectedProperty() {
-        return Connected;
+        return connected;
     }
 
     public void setConnected(boolean connected) {
-        this.Connected.set(connected);
+        this.connected.set(connected);
     }
 
     public StringProperty getRoomIdProperty() {
@@ -76,8 +76,10 @@ public class ConnectionManager {
     }
 
     public void logout() {
-        connectionGod.logoutFromServer();
-        IRC.connectionManager.setRoomId(null);
+        if (getConnectedProperty().getValue()) {
+            connectionGod.logoutFromServer();
+            IRC.connectionManager.setRoomId(null);
+        }
     }
 
     public void createRoom(String roomName) {
