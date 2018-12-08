@@ -7,6 +7,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import pl.put.poznan.sk.irc.IRC;
 import pl.put.poznan.sk.irc.model.Room;
+import pl.put.poznan.sk.irc.utils.Utils;
 
 import java.io.IOException;
 
@@ -36,7 +37,9 @@ public class T2Controller {
 
     @FXML
     private void createRoom() {
-        IRC.connectionManager.createRoom(roomName.getText());
+        IRC.connectionManager.createRoom(
+                Utils.deleteInvalidCharcters(roomName.getText().trim())
+                        .replace(" ", "_"));
         IRC.connectionManager.getRoomsList();
         roomName.setText("");
     }

@@ -50,39 +50,33 @@ public class ConnectionGod implements Runnable {
                         case "login":
                             System.out.println("login:\n\t" + commandValues[1]);
                             if (commandValues[1].equals("ok")) {
-                                Platform.runLater(() -> {
-                                    IRC.connectionManager.setConnected(true);
-                                });
+                                Platform.runLater(() -> IRC.connectionManager.setConnected(true));
                             } else {
-                                Platform.runLater(() -> {
-                                    IRC.connectionManager.setConnected(false);
-                                });
+                                Platform.runLater(() -> IRC.connectionManager.setConnected(false));
                             }
                             break;
                         case "logout":
-                            Platform.runLater(() -> {
-                                IRC.connectionManager.setConnected(false);
-                            });
+                            Platform.runLater(() -> IRC.connectionManager.setConnected(false));
                             return;
                         case "message":
                             if (IRC.connectionManager.getMessagesController() != null) {
-                                Platform.runLater(() -> {
-                                    IRC.connectionManager.getMessagesController().displayMessage(new Message(commandValues[1].split(";")));
-                                });
+                                Platform.runLater(() -> IRC.connectionManager.getMessagesController()
+                                        .displayMessage(new Message(commandValues[1].split(";"))));
+                            }
+                            break;
+                        case "create":
+                            if (!commandValues[1].equals("ok")) {
+                                getRoomsList();
                             }
                             break;
                         case "enter":
                             if (!commandValues[1].equals("ok")) {
-                                Platform.runLater(() -> {
-                                    IRC.connectionManager.setRoomId(null);
-                                });
+                                Platform.runLater(() -> IRC.connectionManager.setRoomId(null));
                             }
                             break;
                         case "leave":
                             if (commandValues[1].equals("ok")) {
-                                Platform.runLater(() -> {
-                                    IRC.connectionManager.setRoomId(null);
-                                });
+                                Platform.runLater(() -> IRC.connectionManager.setRoomId(null));
                             }
                             break;
                         case "rooms":
@@ -90,7 +84,8 @@ public class ConnectionGod implements Runnable {
                                 String[] rooms = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
                                     for (String room : rooms) {
-                                        IRC.connectionManager.getRoomController().displayRoom(new Room(room.split(";")));
+                                        IRC.connectionManager.getRoomController()
+                                                .displayRoom(new Room(room.split(";")));
                                     }
                                 });
                             }
@@ -211,7 +206,7 @@ public class ConnectionGod implements Runnable {
         String string = "$message:"
                 + message.getUsername()
                 + ";" + message.getMessage()
-                + ";" + message.getSentDate()
+                + ";" + message.getSentDate().replace(":", "-")
                 + "#";
         try {
             os.write(string.getBytes());

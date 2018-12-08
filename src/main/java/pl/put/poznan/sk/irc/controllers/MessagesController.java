@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import pl.put.poznan.sk.irc.IRC;
 import pl.put.poznan.sk.irc.model.Message;
+import pl.put.poznan.sk.irc.utils.Utils;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -64,8 +65,8 @@ public class MessagesController {
     private void send() {
         LocalDateTime localDateTime = LocalDateTime.now();
         int minutes = localDateTime.getMinute();
-        String dateString = localDateTime.getHour() + "-" + (minutes < 10 ? "0" + minutes : minutes);
-        String text = messageInput.getText();
+        String dateString = localDateTime.getHour() + ":" + (minutes < 10 ? "0" + minutes : minutes);
+        String text = Utils.deleteInvalidCharcters(messageInput.getText());
         if (!text.equals("") && !text.equals("\n")) {
             Message message = new Message(IRC.connectionConfiguration.getUsername(), text, dateString);
             IRC.connectionManager.sendMessage(message);

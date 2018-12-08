@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import pl.put.poznan.sk.irc.IRC;
+import pl.put.poznan.sk.irc.utils.Utils;
 
 public class T1Controller {
     @FXML
@@ -51,8 +52,10 @@ public class T1Controller {
             host_address_input.setPromptText("Błędna wartość!");
             return;
         }
-        IRC.connectionConfiguration.setUsername(name_input.getText());
-        IRC.connectionConfiguration.setHostAddress(host_address_input.getText());
+        IRC.connectionConfiguration.setUsername(
+                Utils.deleteInvalidCharcters(name_input.getText().trim())
+                        .replace(" ", "_"));
+        IRC.connectionConfiguration.setHostAddress(host_address_input.getText().trim());
         IRC.connectionManager.connectToServer();
         clear();
     }
