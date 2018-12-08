@@ -7,6 +7,8 @@ Simple chat app created with JavaFX and Socket.
 -   [General info](#general-info)
 -   [Technologies](#technologies)
 -   [Description of the communication protocol](#description-of-the-communication-protocol)
+-   [Download](#download)
+-   [You may also like](#you-may-also-like)
 
 ## General info
 
