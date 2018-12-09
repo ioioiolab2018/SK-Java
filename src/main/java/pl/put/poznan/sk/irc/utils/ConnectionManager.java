@@ -94,8 +94,9 @@ public class ConnectionManager {
         connectionGod.getUsersList(roomId.getValue());
     }
 
-    public void enterToRoom() {
-        connectionGod.enterToRoom(roomId.getValue());
+    public void enterToRoom(String roomId) {
+        connectionGod.enterToRoom(roomId);
+        setRoomId(roomId);
     }
 
     public void leaveRoom() {

@@ -4,10 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.TextFlow?>
 
-<HBox spacing="15.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MessageController">
+<HBox spacing="15.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.MessageController">
    <children>
       <AnchorPane minWidth="350.0" style="-fx-background-color: #ffffff;" stylesheets="@../style.css">
           <children>
@@ -43,11 +43,11 @@
                       </Label>
                   </children>
               </HBox>
-            <TextFlow AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+            <VBox layoutY="45.0" maxHeight="350.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
                <children>
-                  <Label fx:id="message" wrapText="true" />
+                  <Label fx:id="message" maxHeight="500.0" maxWidth="350.0" minWidth="350.0" prefWidth="350.0" style="-fx-wrap-text: true;" wrapText="true" />
                </children>
-            </TextFlow>
+            </VBox>
           </children>
       </AnchorPane>
       <AnchorPane minWidth="350.0" />

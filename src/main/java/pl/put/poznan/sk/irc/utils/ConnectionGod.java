@@ -36,7 +36,6 @@ public class ConnectionGod implements Runnable {
                 message += new String(buffer);
 
                 if (message.contains("#")) {
-                    System.out.println(message);
                     startIndex = message.indexOf("$");
                     endIndex = message.indexOf("#");
                     commandValue = message.substring(startIndex + 1, endIndex);
@@ -50,7 +49,6 @@ public class ConnectionGod implements Runnable {
                     String[] commandValues = commandValue.split(":");
                     switch (commandValues[0]) {
                         case "login":
-                            System.out.println("login:\n\t" + commandValues[1]);
                             if (commandValues[1].equals("ok")) {
                                 Platform.runLater(() -> IRC.connectionManager.setConnected(true));
                             } else {
@@ -132,7 +130,6 @@ public class ConnectionGod implements Runnable {
      */
     private void loginToServer() throws IOException {
         String string = "$login:" + IRC.connectionConfiguration.getUsername() + "#";
-        System.out.println(string);
         os.write(string.getBytes());
     }
 
@@ -174,7 +171,6 @@ public class ConnectionGod implements Runnable {
      */
     public void leaveRoom(String roomName) {
         String string = "$leave:" + roomName + "#";
-        System.out.println(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {

@@ -21,7 +21,7 @@ public class MessageController {
     public void setMessage(Message message) {
         this.icon.setText(message.getUsername().substring(0, 1));
         this.username.setText(message.getUsername());
-        this.message.setText(message.getMessage());
         this.sendDate.setText(message.getSentDate());
+        this.message.setText(message.getMessage());
     }
 }

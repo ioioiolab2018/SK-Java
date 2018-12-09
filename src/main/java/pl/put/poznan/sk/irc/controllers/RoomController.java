@@ -25,8 +25,11 @@ public class RoomController {
 
     @FXML
     private void connectToRoom() {
-        IRC.connectionManager.leaveRoom();
-        IRC.connectionManager.setRoomId(roomName.getText());
-        IRC.connectionManager.enterToRoom();
+        if (IRC.connectionManager.getRoomIdProperty().getValue() == null
+                || !IRC.connectionManager.getRoomIdProperty().getValue()
+                .equals(roomName.getText())) {
+            IRC.connectionManager.leaveRoom();
+            IRC.connectionManager.enterToRoom(roomName.getText());
+        }
     }
 }
