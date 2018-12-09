@@ -9,6 +9,7 @@ Simple chat app created with JavaFX and Socket.
 -   [Description of the communication protocol](#description-of-the-communication-protocol)
 -   [Download](#download)
 -   [You may also like](#you-may-also-like)
+-   [Build information](#build-information)
 
 ## General info
 
@@ -53,3 +54,8 @@ You can [download](https://github.com/ioioiolab2018/SK-Java/releases) the latest
 ## You may also like
 
 -   [SK-IRC Server](https://github.com/ioioiolab2018/SK-C) - IRC server for this client.
+
+## Build information
+
+-   Master: [![Build Status](https://travis-ci.org/ioioiolab2018/SK-Java.svg?branch=master)](https://travis-ci.org/ioioiolab2018/SK-Java)
+-   Release: v1.0.0 [![Build Status](https://travis-ci.org/ioioiolab2018/SK-Java.svg?branch=v1.0.0)](https://travis-ci.org/ioioiolab2018/SK-Java)
