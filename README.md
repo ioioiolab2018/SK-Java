@@ -35,7 +35,7 @@ This project is simple IRC chat. It was created for completing the subject of Co
 
 ### Examples of messages
 
-| Komunikat wysyłany przez klienta      | Pozytywna odpowiedź serwera                   | Negatywna odpowiedź serwera |
+| Message sent by the client            | Positive server response                      | Negative server response    |
 | ------------------------------------- | --------------------------------------------- | --------------------------- |
 | \$login:username#                     | \$login:ok#                                   | \$login:notOk#              |
 | \$logout#                             | \$logout:ok#                                  | \$logout:notOk#             |
