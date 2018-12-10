@@ -21,6 +21,7 @@ public class T2Controller {
     void initialize() {
         IRC.connectionManager.setRoomController(this);
         IRC.connectionManager.getRoomsList();
+        IRC.connectionManager.setUserController(null);
     }
 
     public void displayRoom(Room room) {

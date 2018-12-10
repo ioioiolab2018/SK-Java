@@ -17,6 +17,7 @@ public class T3Controller {
     void initialize() {
         IRC.connectionManager.setUserController(this);
         IRC.connectionManager.getUsersList();
+        IRC.connectionManager.setRoomController(null);
     }
 
     public void displayUser(User user) {

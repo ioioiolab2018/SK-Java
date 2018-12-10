@@ -6,7 +6,7 @@ public class ConnectionConfiguration {
     private int port;
 
     public ConnectionConfiguration() {
-        this.port = 7070;
+        this.port = 7060;
     }
 
     public String getUsername() {

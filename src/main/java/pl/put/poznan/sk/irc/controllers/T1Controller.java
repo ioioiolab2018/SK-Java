@@ -30,6 +30,8 @@ public class T1Controller {
                 .bind(IRC.connectionManager.getConnectedProperty()
                         .or(name_input.textProperty().isEmpty())
                         .or(host_address_input.textProperty().isEmpty()));
+        IRC.connectionManager.setRoomController(null);
+        IRC.connectionManager.setUserController(null);
     }
 
     //  ===============   OTHERS   ===============
