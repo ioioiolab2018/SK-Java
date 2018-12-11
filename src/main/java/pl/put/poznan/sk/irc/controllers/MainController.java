@@ -37,6 +37,7 @@ public class MainController {
             } else {
                 optionGroup.selectToggle(optionGroup.getToggles().get(0));
                 displayT1();
+                setMainContainer("/fxml/welcome.fxml");
             }
         });
         IRC.connectionManager.getRoomIdProperty().addListener((observable, oldValue, newValue) -> {
@@ -45,14 +46,16 @@ public class MainController {
                 displayT3();
                 setMainContainer("/fxml/messages.fxml");
             } else {
-                if (IRC.connectionManager.getConnectedProperty().getValue()) {
-                    optionGroup.selectToggle(optionGroup.getToggles().get(1));
-                    displayT2();
-                } else {
-                    optionGroup.selectToggle(optionGroup.getToggles().get(0));
-                    displayT1();
+                if (oldValue != null) {
+                    if (IRC.connectionManager.getConnectedProperty().getValue()) {
+                        optionGroup.selectToggle(optionGroup.getToggles().get(1));
+                        displayT2();
+                    } else {
+                        optionGroup.selectToggle(optionGroup.getToggles().get(0));
+                        displayT1();
+                    }
+                    setMainContainer("/fxml/welcome.fxml");
                 }
-                setMainContainer("/fxml/welcome.fxml");
             }
         });
     }

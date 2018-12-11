@@ -6,10 +6,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.sk.irc.utils.ConnectionConfiguration;
 import pl.put.poznan.sk.irc.utils.ConnectionManager;
 
 public class IRC extends Application {
+    private Logger logger = LoggerFactory.getLogger(IRC.class);
     public static ConnectionManager connectionManager;
     public static ConnectionConfiguration connectionConfiguration;
 
@@ -26,6 +29,7 @@ public class IRC extends Application {
         primaryStage.setResizable(false);
         primaryStage.getIcons().add(new Image(MAIN_ICON));
         primaryStage.show();
+        logger.info("Application started!");
     }
 
     public static void main(String[] args) {
@@ -36,5 +40,6 @@ public class IRC extends Application {
     public void stop(){
         connectionManager.leaveRoom();
         connectionManager.logout();
+        IRC.connectionManager.closeSocket();
     }
 }

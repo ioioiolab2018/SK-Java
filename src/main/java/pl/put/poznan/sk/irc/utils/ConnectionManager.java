@@ -15,7 +15,7 @@ public class ConnectionManager {
     private BooleanProperty connected = new SimpleBooleanProperty(false);
     private StringProperty roomId = new SimpleStringProperty(null);
     private String requestedRoomId;
-    private BooleanProperty displayConnectionErrorMessage = new SimpleBooleanProperty(false);
+    private StringProperty connectionErrorMessage = new SimpleStringProperty(null);
     private MessagesController messagesController;
     private T2Controller roomController;
     private T3Controller userController;
@@ -39,12 +39,12 @@ public class ConnectionManager {
         this.roomId.set(roomId);
     }
 
-    public BooleanProperty isDisplayConnectionErrorMessageProperty() {
-        return displayConnectionErrorMessage;
+    public StringProperty getConnectionErrorMessageProperty() {
+        return connectionErrorMessage;
     }
 
-    public void setDisplayConnectionErrorMessage(boolean displayConnectionErrorMessage) {
-        this.displayConnectionErrorMessage.set(displayConnectionErrorMessage);
+    public void setConnectionErrorMessage(String connectionErrorMessage) {
+        this.connectionErrorMessage.set(connectionErrorMessage);
     }
 
     public MessagesController getMessagesController() {
@@ -96,7 +96,9 @@ public class ConnectionManager {
     }
 
     public void getRoomsList() {
-        connectionGod.getRoomsList();
+        if (connected.getValue() && roomId.getValue() != null) {
+            connectionGod.getRoomsList();
+        }
     }
 
     public void getUsersList() {
@@ -104,8 +106,8 @@ public class ConnectionManager {
     }
 
     public void enterToRoom(String roomId) {
-        connectionGod.enterToRoom(roomId);
         setRequestedRoomId(roomId);
+        connectionGod.enterToRoom(roomId);
     }
 
     public void leaveRoom() {
@@ -116,5 +118,11 @@ public class ConnectionManager {
 
     public void sendMessage(Message message) {
         connectionGod.sendMessage(message);
+    }
+
+    public void closeSocket() {
+        if (connectionGod != null) {
+            connectionGod.closeSocket();
+        }
     }
 }

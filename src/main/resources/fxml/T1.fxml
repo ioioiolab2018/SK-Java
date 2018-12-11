@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.T1Controller">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="pl.put.poznan.sk.irc.controllers.T1Controller">
     <children>
       <HBox alignment="CENTER">
          <children>
@@ -71,5 +71,9 @@
             </Button>
          </children>
       </HBox>
+      <Label fx:id="errorMessage" prefWidth="250.0" textAlignment="CENTER" textFill="RED" wrapText="true">
+         <font>
+            <Font name="Segoe UI" size="14.0" />
+         </font></Label>
     </children>
 </VBox>

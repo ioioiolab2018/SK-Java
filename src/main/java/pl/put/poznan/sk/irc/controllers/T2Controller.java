@@ -20,8 +20,8 @@ public class T2Controller {
     @FXML
     void initialize() {
         IRC.connectionManager.setRoomController(this);
-        IRC.connectionManager.getRoomsList();
         IRC.connectionManager.setUserController(null);
+        IRC.connectionManager.getRoomsList();
     }
 
     public void displayRoom(Room room) {

@@ -15,9 +15,9 @@ public class T3Controller {
 
     @FXML
     void initialize() {
+        IRC.connectionManager.setRoomController(null);
         IRC.connectionManager.setUserController(this);
         IRC.connectionManager.getUsersList();
-        IRC.connectionManager.setRoomController(null);
     }
 
     public void displayUser(User user) {
@@ -30,5 +30,9 @@ public class T3Controller {
         UserController controller = loader.getController();
         controller.setUserInformation(user);
         usersList.getChildren().add(root);
+    }
+
+    public void clearUsersList() {
+        usersList.getChildren().removeAll(usersList.getChildren());
     }
 }

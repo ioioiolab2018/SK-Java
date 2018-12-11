@@ -1,15 +1,19 @@
 package pl.put.poznan.sk.irc.utils;
 
 import javafx.application.Platform;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import pl.put.poznan.sk.irc.IRC;
 import pl.put.poznan.sk.irc.model.Message;
 import pl.put.poznan.sk.irc.model.Room;
 import pl.put.poznan.sk.irc.model.User;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.net.Socket;
 
 public class ConnectionGod implements Runnable {
+    private static final Logger logger = LoggerFactory.getLogger(ConnectionGod.class);
     private Socket socket;
     private InputStream is;
     private OutputStream os;
@@ -28,18 +32,18 @@ public class ConnectionGod implements Runnable {
 
         try {
             loginToServer();
-            while (socket.isConnected()) {
+            while (socket != null && socket.isConnected()) {
                 buffer = new byte[100];
 
                 is.read(buffer);
 
                 message += new String(buffer);
 
-                if (message.contains("#")) {
-                    System.out.println(message);
+                while (message.contains("#")) {
                     startIndex = message.indexOf("$");
                     endIndex = message.indexOf("#");
                     commandValue = message.substring(startIndex + 1, endIndex);
+                    logger.info(commandValue);
 
                     if (message.indexOf("$", endIndex) > endIndex) {
                         message = message.substring(endIndex + 1);
@@ -53,7 +57,8 @@ public class ConnectionGod implements Runnable {
                             if (commandValues[1].equals("ok")) {
                                 Platform.runLater(() -> IRC.connectionManager.setConnected(true));
                             } else {
-                                Platform.runLater(() -> IRC.connectionManager.setConnected(false));
+                                Platform.runLater(() -> IRC.connectionManager.setConnectionErrorMessage("Wystąpił błąd podczas logowania lub istnieje już użytkownik o tej samej nazwie!"));
+                                logger.error("Wystąpił błąd podczas logowania lub istnieje już użytkownik o tej samej nazwie!");
                             }
                             break;
                         case "logout":
@@ -82,7 +87,7 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "rooms":
-                            if (IRC.connectionManager.getRoomController() != null) {
+                            if (IRC.connectionManager.getRoomController() != null && commandValues.length > 1) {
                                 String[] rooms = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
                                     IRC.connectionManager.getRoomController().clearRoomsList();
@@ -94,9 +99,10 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "users":
-                            if (IRC.connectionManager.getUserController() != null) {
+                            if (IRC.connectionManager.getUserController() != null && commandValues.length > 1) {
                                 String[] users = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
+                                    IRC.connectionManager.getUserController().clearUsersList();
                                     for (String user : users) {
                                         IRC.connectionManager.getUserController().displayUser(new User(user));
                                     }
@@ -115,26 +121,32 @@ public class ConnectionGod implements Runnable {
      */
     private void connectToServer() {
         try {
-            socket = new Socket(
-                    IRC.connectionConfiguration.getHostAddress(),
-                    IRC.connectionConfiguration.getPort());
+            socket = new Socket();
+            socket.connect(
+                    new InetSocketAddress(
+                            IRC.connectionConfiguration.getHostAddress(),
+                            IRC.connectionConfiguration.getPort()),
+                    1000);
 
             os = socket.getOutputStream();
             is = socket.getInputStream();
-            System.out.println("CONNECTED");
+            logger.info("Connected to server!");
         } catch (IOException e) {
-            System.out.println("Coś nie pykło!");
-            IRC.connectionManager.setDisplayConnectionErrorMessage(true);
+            Platform.runLater(() -> IRC.connectionManager.setConnectionErrorMessage("Nie można nawiązać połączenia z serwerem!"));
+            logger.error("Nie można nawiązać połączenia z serwerem!");
         }
     }
 
     /**
      * Metoda logująca użytkownika
      */
-    private void loginToServer() throws IOException {
+    private void loginToServer() {
         String string = "$login:" + IRC.connectionConfiguration.getUsername() + "#";
-        System.out.println(string);
-        os.write(string.getBytes());
+        logger.info(string);
+        try {
+            os.write(string.getBytes());
+        } catch (Exception ignored) {
+        }
     }
 
     /**
@@ -142,7 +154,7 @@ public class ConnectionGod implements Runnable {
      */
     public void logoutFromServer() {
         String string = "$logout#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -154,7 +166,7 @@ public class ConnectionGod implements Runnable {
      */
     public void createRoom(String roomName) {
         String string = "$create:" + roomName + "#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -166,7 +178,7 @@ public class ConnectionGod implements Runnable {
      */
     public void enterToRoom(String roomName) {
         String string = "$enter:" + roomName + "#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -178,7 +190,7 @@ public class ConnectionGod implements Runnable {
      */
     public void leaveRoom(String roomName) {
         String string = "$leave:" + roomName + "#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -190,7 +202,7 @@ public class ConnectionGod implements Runnable {
      */
     public void getRoomsList() {
         String string = "$rooms#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -202,7 +214,7 @@ public class ConnectionGod implements Runnable {
      */
     public void getUsersList(String roomName) {
         String string = "$users:" + roomName + "#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
@@ -218,10 +230,21 @@ public class ConnectionGod implements Runnable {
                 + ";" + message.getMessage()
                 + ";" + message.getSentDate().replace(":", "-")
                 + "#";
-        System.out.println(string);
+        logger.info(string);
         try {
             os.write(string.getBytes());
         } catch (IOException ignored) {
+        }
+    }
+
+    public void closeSocket() {
+        if (socket != null) {
+            try {
+                socket.close();
+                socket = null;
+                logger.info("Socket closed!");
+            } catch (IOException ignored) {
+            }
         }
     }
 }

@@ -25,9 +25,9 @@
             </Label>
          </children>
       </HBox>
-      <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="94.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
+      <ScrollPane fitToHeight="true" fitToWidth="true" layoutY="94.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="74.0">
          <content>
-              <VBox fx:id="roomsList" />
+              <VBox fx:id="roomsList" style="-fx-background-color: #ffffff;" />
          </content>
       </ScrollPane>
       <VBox layoutX="10.0" layoutY="10.0" prefWidth="100.0" spacing="8.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">

@@ -2,11 +2,14 @@ package pl.put.poznan.sk.irc.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import pl.put.poznan.sk.irc.IRC;
 import pl.put.poznan.sk.irc.utils.Utils;
 
 public class T1Controller {
+    @FXML
+    private Label errorMessage;
     @FXML
     private TextField name_input;
     @FXML
@@ -18,20 +21,31 @@ public class T1Controller {
 
     @FXML
     void initialize() {
+        IRC.connectionManager.setRoomController(null);
+        IRC.connectionManager.setUserController(null);
+
         if (IRC.connectionConfiguration.getUsername() != null) {
             name_input.setText(IRC.connectionConfiguration.getUsername());
         }
         if (IRC.connectionConfiguration.getHostAddress() != null) {
             host_address_input.setText(IRC.connectionConfiguration.getHostAddress());
         }
+
+        IRC.connectionManager.getConnectionErrorMessageProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                errorMessage.setText(newValue);
+                errorMessage.setVisible(true);
+            } else {
+                errorMessage.setVisible(false);
+            }
+        });
+
         disconnectButton.disableProperty()
                 .bind(IRC.connectionManager.getConnectedProperty().not());
         connectButton.disableProperty()
                 .bind(IRC.connectionManager.getConnectedProperty()
                         .or(name_input.textProperty().isEmpty())
                         .or(host_address_input.textProperty().isEmpty()));
-        IRC.connectionManager.setRoomController(null);
-        IRC.connectionManager.setUserController(null);
     }
 
     //  ===============   OTHERS   ===============
@@ -61,5 +75,4 @@ public class T1Controller {
         IRC.connectionManager.connectToServer();
         clear();
     }
-
 }
