@@ -43,4 +43,13 @@ public class Message {
     public void setSentDate(String sentDate) {
         this.sentDate = sentDate;
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+                "username: '" + username + '\'' +
+                ", message: '" + message + '\'' +
+                ", sentDate: '" + sentDate + '\'' +
+                " }";
+    }
 }

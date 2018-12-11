@@ -14,6 +14,7 @@ public class ConnectionManager {
     private ConnectionGod connectionGod;
     private BooleanProperty connected = new SimpleBooleanProperty(false);
     private StringProperty roomId = new SimpleStringProperty(null);
+    private String requestedRoomId;
     private BooleanProperty displayConnectionErrorMessage = new SimpleBooleanProperty(false);
     private MessagesController messagesController;
     private T2Controller roomController;
@@ -70,6 +71,14 @@ public class ConnectionManager {
         this.userController = userController;
     }
 
+    public String getRequestedRoomId() {
+        return requestedRoomId;
+    }
+
+    public void setRequestedRoomId(String requestedRoomId) {
+        this.requestedRoomId = requestedRoomId;
+    }
+
     public void connectToServer() {
         connectionGod = new ConnectionGod();
         new Thread(connectionGod).start();
@@ -96,7 +105,7 @@ public class ConnectionManager {
 
     public void enterToRoom(String roomId) {
         connectionGod.enterToRoom(roomId);
-        setRoomId(roomId);
+        setRequestedRoomId(roomId);
     }
 
     public void leaveRoom() {

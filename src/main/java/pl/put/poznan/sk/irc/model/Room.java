@@ -32,4 +32,12 @@ public class Room {
     public void setUserQuantity(String userQuantity) {
         this.userQuantity = userQuantity;
     }
+
+    @Override
+    public String toString() {
+        return "{ " +
+                "roomName: '" + roomName + '\'' +
+                ", userQuantity: '" + userQuantity + '\'' +
+                " }";
+    }
 }

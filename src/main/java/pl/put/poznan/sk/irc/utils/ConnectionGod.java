@@ -58,6 +58,7 @@ public class ConnectionGod implements Runnable {
                             break;
                         case "logout":
                             Platform.runLater(() -> IRC.connectionManager.setConnected(false));
+                            socket.close();
                             return;
                         case "message":
                             if (IRC.connectionManager.getMessagesController() != null) {
@@ -71,8 +72,8 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "enter":
-                            if (!commandValues[1].equals("ok")) {
-                                Platform.runLater(() -> IRC.connectionManager.setRoomId(null));
+                            if (commandValues[1].equals("ok")) {
+                                Platform.runLater(() -> IRC.connectionManager.setRoomId(IRC.connectionManager.getRequestedRoomId()));
                             }
                             break;
                         case "leave":
@@ -93,7 +94,7 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "users":
-                            if (IRC.connectionManager.getRoomController() != null) {
+                            if (IRC.connectionManager.getUserController() != null) {
                                 String[] users = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
                                     for (String user : users) {
