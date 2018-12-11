@@ -96,7 +96,7 @@ public class ConnectionManager {
     }
 
     public void getRoomsList() {
-        if (connected.getValue() && roomId.getValue() != null) {
+        if (connected.getValue()) {
             connectionGod.getRoomsList();
         }
     }

@@ -87,13 +87,21 @@ public class ConnectionGod implements Runnable {
                             }
                             break;
                         case "rooms":
-                            if (IRC.connectionManager.getRoomController() != null && commandValues.length > 1) {
+                            if (commandValues.length > 1) {
                                 String[] rooms = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
-                                    IRC.connectionManager.getRoomController().clearRoomsList();
-                                    for (String room : rooms) {
-                                        IRC.connectionManager.getRoomController()
-                                                .displayRoom(new Room(room.split(";")));
+                                    if (IRC.connectionManager.getRoomController() != null) {
+                                        IRC.connectionManager.getRoomController().clearRoomsList();
+                                        for (String room : rooms) {
+                                            IRC.connectionManager.getRoomController()
+                                                    .displayRoom(new Room(room.split(";")));
+                                        }
+                                    }
+                                });
+                            } else {
+                                Platform.runLater(() -> {
+                                    if (IRC.connectionManager.getRoomController() != null) {
+                                        IRC.connectionManager.getRoomController().clearRoomsList();
                                     }
                                 });
                             }
@@ -102,9 +110,11 @@ public class ConnectionGod implements Runnable {
                             if (IRC.connectionManager.getUserController() != null && commandValues.length > 1) {
                                 String[] users = commandValues[1].split(" ");
                                 Platform.runLater(() -> {
-                                    IRC.connectionManager.getUserController().clearUsersList();
-                                    for (String user : users) {
-                                        IRC.connectionManager.getUserController().displayUser(new User(user));
+                                    if (IRC.connectionManager.getUserController() != null) {
+                                        IRC.connectionManager.getUserController().clearUsersList();
+                                        for (String user : users) {
+                                            IRC.connectionManager.getUserController().displayUser(new User(user));
+                                        }
                                     }
                                 });
                             }

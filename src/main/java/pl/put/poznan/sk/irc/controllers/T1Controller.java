@@ -28,7 +28,7 @@ public class T1Controller {
             name_input.setText(IRC.connectionConfiguration.getUsername());
         }
         if (IRC.connectionConfiguration.getHostAddress() != null) {
-            host_address_input.setText(IRC.connectionConfiguration.getHostAddress());
+            host_address_input.setText(IRC.connectionConfiguration.getHostAddress() + ":" + IRC.connectionConfiguration.getPort());
         }
 
         IRC.connectionManager.getConnectionErrorMessageProperty().addListener((observable, oldValue, newValue) -> {
@@ -63,7 +63,8 @@ public class T1Controller {
 
     @FXML
     private void connect() {
-        if (!host_address_input.getText().matches("\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}|localhost")) {
+        if (!host_address_input.getText().matches("\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}|localhost|" +
+                "\\d{1,3}.\\d{1,3}.\\d{1,3}.\\d{1,3}:\\d{4}|localhost:\\d{4}")) {
             host_address_input.setStyle("-fx-background-color: red , white , white;");
             host_address_input.setPromptText("Błędna wartość!");
             return;
@@ -71,7 +72,14 @@ public class T1Controller {
         IRC.connectionConfiguration.setUsername(
                 Utils.deleteInvalidCharcters(name_input.getText().trim())
                         .replace(" ", "_"));
-        IRC.connectionConfiguration.setHostAddress(host_address_input.getText().trim());
+        String hostAddress = host_address_input.getText();
+        if (hostAddress.contains(":")) {
+            String[] address = hostAddress.split(":");
+            IRC.connectionConfiguration.setHostAddress(address[0].trim());
+            IRC.connectionConfiguration.setPort(Integer.parseInt(address[1].trim()));
+        } else {
+            IRC.connectionConfiguration.setHostAddress(hostAddress.trim());
+        }
         IRC.connectionManager.connectToServer();
         clear();
     }
